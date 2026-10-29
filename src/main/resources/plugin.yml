@@ -1,0 +1,24 @@
+name: ${project.name}
+version: ${project.version}
+main: com.eupolemo.desafiosplugin.DesafiosPlugin
+api-version: '1.21'
+description: ${project.description}
+authors: [ Eupolemo ]
+website: https://github.com/eupolemo/DesafiosPlugin
+
+commands:
+  desafio:
+    description: Constroi, lista e joga os desafios de obstaculos
+    usage: /desafio [info <id>|criar <id> [seed]|entrar <id>|sair|remover <id>|ranking <id>|reload]
+    aliases: [ desafios, df ]
+
+permissions:
+  desafios.use:
+    description: Listar, entrar e sair de um desafio
+    default: true
+  desafios.criar:
+    description: Construir e remover arenas
+    default: op
+  desafios.reload:
+    description: Recarregar a configuracao do plugin
+    default: op

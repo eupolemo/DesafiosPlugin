@@ -1,0 +1,112 @@
+# DesafiosPlugin - configuracao
+
+# Formato deste arquivo. Nao edite: o plugin usa para migrar configs antigas.
+versao-config: 1
+
+# Geometria da arena. Uma arena e um corredor de salas encadeadas no sentido +Z: sala de
+# entrada, uma sala por etapa e a sala do premio. Cada sala e uma caixa fechada, entao mudar
+# estes numeros muda quanto espaco o /desafio criar sobrescreve no mundo.
+arena:
+  # Largura interna (eixo X). Impar, para o labirinto fechar a grade e a porta ficar no centro.
+  largura: 15
+  # Altura interna (eixo Y).
+  altura: 8
+  # Comprimento interno de cada sala (eixo Z). Impar, pelo mesmo motivo da largura.
+  comprimento: 21
+  # Distancia entre o jogador e a parede da sala de entrada.
+  distancia-inicial: 6
+  # Blocos escritos por tick. Menor = mais lento e mais leve para o servidor.
+  blocos-por-tick: 1500
+  # Poe quem esta correndo em modo aventura, para nao quebrar caminho pelo meio da arena.
+  # O modo anterior volta ao terminar, abandonar ou sair do servidor.
+  #
+  # Com false, quem estiver em criativo ou espectador ainda cai para sobrevivencia: nesses dois
+  # modos o jogador sobrevoa a arena inteira, e ai nao ha desafio nenhum para medir.
+  modo-aventura: true
+
+# Dentro do desafio nao existe buff. Efeito de pocao, voo, elitro, perola e montaria sao tirados
+# na largada e barrados enquanto a corrida dura — senao salto reforcado transforma o parkour num
+# passeio e uma perola pula a sala inteira. Os efeitos que o jogador trouxe voltam para ele no
+# fim. Isso nao tem chave para desligar: e o que faz o tempo no ranking significar alguma coisa.
+corrida:
+  # Com false, o golpe que mataria vira volta ao checkpoint com a vida cheia. Com true, o
+  # jogador morre de verdade e a corrida acaba.
+  morte-real: false
+  # Encostar em lava ou fogo devolve ao checkpoint em vez de so queimar.
+  volta-por-queimadura: true
+  # Aviso na tela quando falta este tanto de tempo.
+  aviso-tempo-segundos: 30
+  # Anuncia no servidor quem termina um desafio.
+  anunciar-vitoria: true
+
+# Cada desafio sorteia as suas salas na hora do /desafio criar. A mesma seed reconstroi a mesma
+# arena; sem seed, cada construcao e diferente.
+#
+#   dificuldade   facil | normal | dificil | insano — muda saltos, luz, numero de mobs e vento
+#   etapas        quantas salas de obstaculo entre a entrada e o premio
+#   tempo-limite  segundos ate a corrida falhar; 0 desliga o cronometro
+#   tipos         opcional; limita o sorteio a estes geradores. Sem isso, sorteia entre todos
+#                 os que aceitam a dificuldade.
+#
+# Geradores: labirinto, parkour, lava, gelo, dardos, mobs, portas, ponte
+desafios:
+  iniciante:
+    nome: "Trilha do Aprendiz"
+    dificuldade: facil
+    etapas: 4
+    tempo-limite: 420
+    premio:
+      mensagem: "Voce atravessou a Trilha do Aprendiz!"
+      xp: 30
+      itens:
+        - material: DIAMOND
+          quantidade: 3
+        - material: GOLDEN_APPLE
+          quantidade: 2
+      comandos: []
+
+  caverna:
+    nome: "Caverna dos Enigmas"
+    dificuldade: normal
+    etapas: 6
+    tempo-limite: 600
+    tipos: [ labirinto, portas, dardos, mobs, lava ]
+    premio:
+      mensagem: "A Caverna dos Enigmas nao te segurou."
+      xp: 80
+      itens:
+        - material: DIAMOND_BLOCK
+          quantidade: 1
+        - material: ENCHANTED_GOLDEN_APPLE
+          quantidade: 1
+      comandos: []
+
+  torre:
+    nome: "Torre do Vazio"
+    dificuldade: dificil
+    etapas: 7
+    tempo-limite: 900
+    premio:
+      mensagem: "A Torre do Vazio caiu antes de voce."
+      xp: 200
+      itens:
+        - material: NETHERITE_INGOT
+          quantidade: 1
+      # %jogador% vira o nome de quem venceu. Serve para entregar item de outro plugin, por
+      # exemplo:  "itens dar espada-do-infinito %jogador%"
+      comandos: []
+
+  pesadelo:
+    nome: "Pesadelo"
+    dificuldade: insano
+    etapas: 9
+    tempo-limite: 1200
+    premio:
+      mensagem: "Ninguem devia ter conseguido isso."
+      xp: 500
+      itens:
+        - material: NETHERITE_BLOCK
+          quantidade: 1
+        - material: DRAGON_EGG
+          quantidade: 1
+      comandos: []
